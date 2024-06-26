@@ -1,30 +1,41 @@
 import { Card } from "../components/ui/Card/Card";
 import useProductsStore from "../store/useProductsStore";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const FavoritesList = () => {
+  const navigate = useNavigate(); // хук для роутинга
+  
   // Достаем функцию для работы с сохраненками
   const { getFavoriteProducts, setFavorite } = useProductsStore();
 
-  // Вызываем эту функцию
+  // Вызываем функцию для показа сохраненок
   const favoritesProducts = getFavoriteProducts();
 
+  // Обработчик клика по карточке
+  const handleCardClick = (id) => {
+    navigate(`/cards/${id}`);
+  };
+
   return (
-    <section className="favorites">
-      <div className="container mx-auto px-4">
-        <h3 className="flex mb-3">Сохраненные ранее товары</h3>
+    <section className="favorites min-h-72">
+      <div className="max-w-7xl mx-auto px-2">
         <Link
           to="/cards"
           className=" text-indigo-500 hover:text-indigo-600 border-b-2 border-b-indigo-500 mb-8 inline-flex"
         >
           Вернуться карточкам
         </Link>
-        <div className="flex flex-wrap justify-between">
-          {!!favoritesProducts &&
+
+        <h2 className="mb-4 text-4xl">
+          {favoritesProducts?.length ? "Сохраненные ранее товары." : "У вас нет сохраненных товаров."}
+        </h2>
+        <div className="flex flex-wrap gap-9">
+          {favoritesProducts?.length > 0 &&
             favoritesProducts.map((product) => (
               <Card
-                key={product?.id}
+                key={product.id}
                 details={product}
+                onCardClick={handleCardClick}
                 onToggleFavorite={setFavorite}
               />
             ))}

@@ -19,10 +19,10 @@ const Header = () => {
   // Достаем функцию, которая показывает сохраненки
   const { getFavoriteProducts } = useProductsStore();
 
-  const favoriteProducts = getFavoriteProducts();
+  const favoritesCount = getFavoriteProducts()?.length;
 
   // Показ страницы с сохраненками
-  const handleOpenFavorites = () => {
+  const handleToOpenFavorites = () => {
     navigate(`/favorites`);
   };
 
@@ -40,7 +40,7 @@ const Header = () => {
 
   return (
     <header className="bg-white shadow fixed top-0 left-0 right-0 z-10">
-      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-2">
         <div className="relative flex justify-between h-16">
           <nav className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
             <NavLink to="/" className="flex-shrink-0 flex items-center">
@@ -74,29 +74,31 @@ const Header = () => {
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <button
               type="button"
-              onClick={handleOpenFavorites}
-              className="relative bg-transparent p-1 mr-3 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              onClick={handleToOpenFavorites}
+              className={`relative bg-transparent p-1 mr-3 rounded-full text-gray-400 hover:text-gray-500   ${
+                location?.pathname === "/favorites" ? "text-indigo-500" : ""
+              }`}
             >
               <svg
                 fill="currentColor"
                 width="24"
                 height="24"
+                xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 32 32"
               >
-                <path d="M27.303,12a2.6616,2.6616,0,0,0-1.9079.8058l-.3932.4054-.397-.4054a2.6615,2.6615,0,0,0-3.8157,0,2.7992,2.7992,0,0,0,0,3.8964L25.0019,21l4.2089-4.2978a2.7992,2.7992,0,0,0,0-3.8964A2.6616,2.6616,0,0,0,27.303,12Z" />
-                <path d="M2,30H4V25a5.0059,5.0059,0,0,1,5-5h6a5.0059,5.0059,0,0,1,5,5v5h2V25a7.0082,7.0082,0,0,0-7-7H9a7.0082,7.0082,0,0,0-7,7Z" />
-                <path d="M12,4A5,5,0,1,1,7,9a5,5,0,0,1,5-5m0-2a7,7,0,1,0,7,7A7,7,0,0,0,12,2Z" />
+                <path d="M16,2a9,9,0,0,0-6,15.69V30l6-4,6,4V17.69A9,9,0,0,0,16,2Zm4,24.26-2.89-1.92L16,23.6l-1.11.74L12,26.26V19.05a8.88,8.88,0,0,0,8,0ZM20.89,16A7,7,0,1,1,23,11,7,7,0,0,1,20.89,16Z" />
                 <rect className="fill-none" width="32" height="32" />
               </svg>
-              {!!favoriteProducts?.length && (
-                <span className="w-4 h-4 inline-flex justify-center justify-items-center bg-indigo-500 rounded-3xl absolute -top-2 -right-2 color-white">
-                  {favoriteProducts?.length}
+
+              {!!favoritesCount && (
+                <span className="w-4 h-4 text-xs/6 px-1 leading-4 text-white inline-flex justify-center justify-items-center bg-indigo-500 rounded-3xl absolute top-0 right-0">
+                  {favoritesCount}
                 </span>
               )}
             </button>
             <button
               type="button"
-              className="bg-transparent p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="bg-transparent p-1 rounded-full text-gray-400 hover:text-gray-500"
             >
               <svg
                 fill="currentColor"

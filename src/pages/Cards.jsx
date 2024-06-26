@@ -8,15 +8,16 @@ const Cards = () => {
   // Стор для работы с продуктами
   const { products, setFavorite } = useProductsStore();
 
-  // Обработчик клика по карточке (для открытия сайдбара, например)
+  // Обработчик клика по карточке
   const handleCardClick = (id) => {
     navigate(`/cards/${id}`);
   };
 
   return (
     <section className="products">
-      <div className="container mx-auto px-4">
-        <div className="flex flex-wrap justify-between">
+      <div className="max-w-7xl mx-auto px-2">
+        <h2 className="mb-4 text-4xl font-bold">Страница с товарами.</h2>
+        <div className="flex flex-wrap gap-9">
           {!!products &&
             products.map((product) => (
               <Card

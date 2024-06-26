@@ -14,13 +14,14 @@ const CardDetail = () => {
 
   return (
     <section className="card-details">
-      <div className="container mx-auto p-4">
+      <div className="max-w-7xl mx-auto px-2">
         <Link
           to="/cards"
-          className=" text-indigo-500 hover:text-indigo-600 border-b-2 border-b-indigo-500 mb-8 inline-flex"
+          className="inline-flex text-indigo-500 hover:text-indigo-600 border-b-2 border-b-indigo-500 mb-8"
         >
           Вернуться назад
         </Link>
+        <h2 className="mb-4 text-4xl font-bold">{product?.name}</h2>
         <div className="max-w-md rounded shadow-lg relative">
           <div className="relative">
             <div className="absolute inset-0 bg-black opacity-30 rounded"></div>
@@ -46,7 +47,6 @@ const CardDetail = () => {
             </svg>
           </button>
           <div className="px-6 py-4">
-            <div className="font-bold text-xl mb-2">{product?.title}</div>
             <p className="text-gray-600 text-sm mb-2">{product?.description}</p>
             <p className="text-gray-600 text-sm mb-2">{product?.category}</p>
             {product?.rating && (
