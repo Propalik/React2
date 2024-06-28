@@ -4,7 +4,7 @@ import useProductsStore from "../../../store/useProductsStore";
 /** Массив пунктов меню */
 const navItems = [
   { name: "Home", path: "/" },
-  { name: "Cards", path: "/cards" },
+  { name: "Products", path: "/cards" },
 ];
 
 /**
@@ -50,7 +50,7 @@ const Header = () => {
                 alt="Workflow"
               />
               <img
-                className="hidden lg:block h-8 w-auto"
+                className="hidden lg:block h-8 w-auto fill-zinc-800"
                 src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
                 alt="Workflow"
               />
@@ -60,7 +60,7 @@ const Header = () => {
                 <NavLink
                   to={item?.path}
                   key={item?.path}
-                  className={`text-gray-600 inline-flex items-center px-1 pt-1 text-sm ${
+                  className={`text-zinc-800 inline-flex items-center px-1 pt-1 text-sm ${
                     isActiveLink(item?.path)
                       ? "text-indigo-500 border-b-2 border-indigo-500"
                       : "hover:text-indigo-500"

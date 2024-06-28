@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import useProductsStore from "../store/useProductsStore";
 import { Link } from "react-router-dom";
+import { IoIosArrowBack } from 'react-icons/io';
 
 const CardDetail = () => {
   // Получение id из адресной строки через React-router-dom
@@ -17,11 +18,11 @@ const CardDetail = () => {
       <div className="max-w-7xl mx-auto px-2">
         <Link
           to="/cards"
-          className="inline-flex text-indigo-500 hover:text-indigo-600 border-b-2 border-b-indigo-500 mb-8"
+          className="inline-flex text-indigo-500 hover:text-indigo-600 mb-8"
         >
-          Вернуться назад
+          <IoIosArrowBack className="mr-1 w-5 h-5" />Go back
         </Link>
-        <h2 className="mb-4 text-4xl font-bold">{product?.name}</h2>
+        <h2 className="mb-4 text-4xl font-bold text-zinc-800">{product?.name}</h2>
         <div className="max-w-md rounded shadow-lg relative">
           <div className="relative">
             <div className="absolute inset-0 bg-black opacity-30 rounded"></div>

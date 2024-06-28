@@ -16,7 +16,7 @@ const Cards = () => {
   return (
     <section className="products">
       <div className="max-w-7xl mx-auto px-2">
-        <h2 className="mb-4 text-4xl font-bold">Страница с товарами.</h2>
+        <h2 className="mb-4 text-4xl font-bold text-zinc-800">Products Page</h2>
         <div className="flex flex-wrap gap-9">
           {!!products &&
             products.map((product) => (

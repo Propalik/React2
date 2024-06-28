@@ -68,7 +68,7 @@ export const Card = (props) => {
         </button>
       </div>
       <div className="p-4">
-        <h3 className="text-lg font-medium mb-2">{name}</h3>
+        <h3 className="text-lg font-medium mb-2 text-zinc-800">{name}</h3>
         {description && (
           <p className="text-gray-600 text-sm mb-4">{description}</p>
         )}
@@ -80,7 +80,7 @@ export const Card = (props) => {
           </div>
         )}
         <div className="flex items-center justify-between">
-          <span className="font-bold text-lg">{price}$</span>
+          <span className="font-bold text-md text-zinc-800">{price}$</span>
         </div>
       </div>
     </div>
