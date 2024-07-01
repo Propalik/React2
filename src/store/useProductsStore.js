@@ -1,18 +1,45 @@
 import { create } from "zustand";
-import { initialProducts } from "../../data";
+// import { initialProducts } from "../../data";
 
 /**
  * Стор для управления продуктами и состоянием сохраненных продуктов.
  */
 const useProductsStore = create((set) => {
+  // Инициализация переменной для хранения продуктов
+  let products;
+
   // Загрузка избранных продуктов из localStorage.
   const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
+  async function getProducts() {
+    try {
+      // Выполнение запроса
+      const response = await fetch("http://localhost:3000/products");
+
+      if (!response?.ok) {
+        throw new Error("Failed to fetch products");
+      }
+
+      // Асинхронная сериализация
+      const data = await response?.json();
+
+      // Перезапись переменной на полученные данные
+      products = data?.map((product) => ({
+        ...product,
+        isFavorite: storedFavorites?.includes(product?.id),
+      }));
+
+      set({ products });
+    } catch (error) {
+      console.error("Error fetching products");
+    }
+  }
+
   // Инициализация продуктов с учетом сохраненных состояний
-  const products = initialProducts?.map((product) => ({
-    ...product,
-    isFavorite: storedFavorites?.includes(product?.id),
-  }));
+  // const products = initialProducts?.map((product) => ({
+  //   ...product,
+  //   isFavorite: storedFavorites?.includes(product?.id),
+  // }));
 
   /**
     Находит продукт по id.
@@ -25,7 +52,7 @@ const useProductsStore = create((set) => {
    * Переключает состояние сохраненного продукта по id.
    * @param {string} id - id продукта.
    */
-  const setFavorite = (id) => {
+  const onToggleFavorite = (id) => {
     // Обновляем продукты на странице, переключая состояние сохраненного продукта
     const updatedProducts = products?.map((product) => {
       if (product?.id === id) {
@@ -53,8 +80,9 @@ const useProductsStore = create((set) => {
 
   return {
     products,
+    getProducts,
     getProductById,
-    setFavorite,
+    onToggleFavorite,
     getFavoriteProducts,
   };
 });

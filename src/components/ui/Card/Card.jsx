@@ -1,3 +1,5 @@
+import Image from "../Image/Image";
+
 /**
  * Компонент карточка.
  * @param {object} props - Свойства компонента.
@@ -25,13 +27,13 @@ export const Card = (props) => {
     isFavorite,
   } = props.details;
 
-  const { onCardClick, onToggleFavorite } = props;
+  const { onCardClick, onHeartClick } = props;
 
   // Обработчик клика на иконку сердечка
   const handleFavorite = (event) => {
     event.stopPropagation(); // Предотвр. всплытие события
 
-    onToggleFavorite && onToggleFavorite(id);
+    onHeartClick && onHeartClick(id);
   };
 
   // Обработчик клика по карточке
@@ -45,7 +47,12 @@ export const Card = (props) => {
       className="max-w-72 rounded-md overflow-hidden shadow-md hover:shadow-lg mb-1 cursor-pointer"
     >
       <div className="relative">
-        <img className="w-full max-h-44" src={imgSrc} alt={name} />
+        <Image
+          className="w-full max-h-44"
+          isCritical={true}
+          src={imgSrc}
+          alt={name}
+        />
         <div className="absolute top-0 left-0 w-full h-full bg-black opacity-30 transition-opacity duration-300 hover:opacity-50"></div>
         {price && (
           <div className="absolute top-0 right-0 bg-indigo-500 text-white px-2 py-1 m-2 rounded-md text-sm font-normal">

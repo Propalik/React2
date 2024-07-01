@@ -1,14 +1,15 @@
 import { useParams } from "react-router-dom";
 import useProductsStore from "../store/useProductsStore";
 import { Link } from "react-router-dom";
-import { IoIosArrowBack } from 'react-icons/io';
+import { IoIosArrowBack } from "react-icons/io";
+import Image from "../components/ui/Image/Image";
 
 const CardDetail = () => {
   // Получение id из адресной строки через React-router-dom
   const { id } = useParams();
 
   // Стор для работы с продуктами
-  const { getProductById, setFavorite } = useProductsStore();
+  const { getProductById, onToggleFavorite } = useProductsStore();
 
   // Находим карточку по id.
   const product = getProductById(id);
@@ -20,13 +21,16 @@ const CardDetail = () => {
           to="/cards"
           className="inline-flex text-indigo-500 hover:text-indigo-600 mb-8"
         >
-          <IoIosArrowBack className="mr-1 w-5 h-5" />Go back
+          <IoIosArrowBack className="mr-1 w-5 h-5" />
+          Go back
         </Link>
-        <h2 className="mb-4 text-4xl font-bold text-zinc-800">{product?.name}</h2>
+        <h2 className="mb-4 text-4xl font-bold text-zinc-800">
+          {product?.name}
+        </h2>
         <div className="max-w-md rounded shadow-lg relative">
           <div className="relative">
             <div className="absolute inset-0 bg-black opacity-30 rounded"></div>
-            <img
+            <Image
               className="w-full rounded"
               src={product?.imgSrc}
               alt={product?.title}
@@ -37,7 +41,7 @@ const CardDetail = () => {
             className={`absolute top-0 left-0 m-2 p-2 rounded-full ${
               product?.isFavorite ? "text-indigo-500" : "text-white"
             }`}
-            onClick={() => setFavorite(id)}
+            onClick={() => onToggleFavorite(id)}
           >
             <svg
               className="w-6 h-6 fill-current"
