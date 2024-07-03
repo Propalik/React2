@@ -11,7 +11,7 @@ const useProductsStore = create((set) => {
   // Загрузка избранных продуктов из localStorage.
   const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
-  async function getProducts() {
+  (async () => {
     try {
       // Выполнение запроса
       const response = await fetch("http://localhost:3000/products");
@@ -33,7 +33,7 @@ const useProductsStore = create((set) => {
     } catch (error) {
       console.error("Error fetching products");
     }
-  }
+  })();
 
   // Инициализация продуктов с учетом сохраненных состояний
   // const products = initialProducts?.map((product) => ({
@@ -80,7 +80,6 @@ const useProductsStore = create((set) => {
 
   return {
     products,
-    getProducts,
     getProductById,
     onToggleFavorite,
     getFavoriteProducts,

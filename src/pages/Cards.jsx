@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Card } from "../components/ui/Card/Card";
 import useProductsStore from "../store/useProductsStore";
 import { useNavigate } from "react-router-dom";
@@ -8,11 +8,7 @@ const Cards = () => {
   const navigate = useNavigate(); // хук для роутинга
 
   // Стор для работы с продуктами
-  const { products, getProducts, onToggleFavorite, getProductById } = useProductsStore();
-
-  useEffect(() => {
-    getProducts();
-  }, [getProducts]);
+  const { products, onToggleFavorite, getProductById } = useProductsStore();
 
   // Обработчик клика по карточке
   const handleCardClick = (id) => {
@@ -39,9 +35,7 @@ const Cards = () => {
 
     setAlertState({
       isOpen: true,
-      message: isFavorite
-        ? "Товар удален из сохраненок"
-        : "Товар добавлен в сохраненки",
+      message: isFavorite ? "Товар удален из сохраненок" : "Товар добавлен в сохраненки",
     });
   };
 
