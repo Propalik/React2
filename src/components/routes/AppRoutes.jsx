@@ -4,11 +4,13 @@ import Home from "../../pages/Home";
 import Cards from "../../pages/Cards";
 import CardDetail from "../../pages/CardDetail";
 import FavoritesList from "../../pages/FavoritesList";
+import Admin from "../../pages/Admin";
 
 /** Массив роутов приложения */
 const routes = [
   { path: "/", element: <Home /> },
   { path: "cards", element: <Cards /> },
+  { path: "admin", element: <Admin /> },
   { path: "cards/:id", element: <CardDetail /> },
   { path: "favorites", element: <FavoritesList /> },
 ];
