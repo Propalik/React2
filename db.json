@@ -214,5 +214,25 @@
       "isFavorite": false,
       "cartQuantity": 1
     }
+  ],
+  "items": [
+    {
+      "id": "1",
+      "name": "Product 1",
+      "category": "Category A",
+      "price": 100
+    },
+    {
+      "id": "2",
+      "name": "Product 2",
+      "category": "Category B",
+      "price": 200
+    },
+    {
+      "id": "3",
+      "name": "Product 3",
+      "category": "Category C",
+      "price": 300
+    }
   ]
 }
