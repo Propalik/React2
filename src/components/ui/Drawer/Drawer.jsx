@@ -48,11 +48,14 @@ export const Drawer = ({
    *
    * @param {Event} event - Нажатие клавиши Esc.
    */
-  const handleKeyPress = (event) => {
-    if (event.key === "Escape") {
-      onClose();
-    }
-  };
+  const handleKeyPress = useCallback(
+    (event) => {
+      if (event?.key === "Escape") {
+        onClose();
+      }
+    },
+    [onClose]
+  );
 
   /**
    * Добавляет/удаляет обработчик клика за пределами компонента при его открытии/закрытии.
@@ -81,15 +84,15 @@ export const Drawer = ({
           } right-0 z-20 w-2/6 p-8 bg-white transition-transform duration-300 ease-in-out`}
         >
           <header className="flex justify-between mb-4">
-            {title && <h2 className="text-xl font-bold">{title}</h2>}
+            {title && <h2 className="text-3xl font-bold mb-8">{title}</h2>}
             <button
               onClick={closeDrawer}
-              className="text-gray-600 hover:text-gray-800"
+              className="text-gray-600 hover:text-gray-800 w-10 h-10 inline-flex justify-center items-center absolute top-0 right-0 text-xl"
             >
               <LiaTimesSolid />
             </button>
           </header>
-          <main>{children}</main>
+          <main className="pt-0 pb-0">{children}</main>
           <footer className="flex justify-end mt-4"></footer>
         </aside>
       </div>,

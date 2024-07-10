@@ -217,22 +217,28 @@
   ],
   "items": [
     {
-      "id": "1",
-      "name": "Product 1",
-      "category": "Category A",
-      "price": 100
+      "name": "Новый товар 1",
+      "category": "Категория 1",
+      "price": "100",
+      "id": 1
     },
     {
-      "id": "2",
-      "name": "Product 2",
-      "category": "Category B",
-      "price": 200
+      "name": "Название товара 2",
+      "category": "Категория товара 2",
+      "price": "200",
+      "id": 2
     },
     {
-      "id": "3",
-      "name": "Product 3",
-      "category": "Category C",
-      "price": 300
+      "name": "Название товара 3",
+      "category": "Категория товара 3",
+      "price": "300",
+      "id": 3
+    },
+    {
+      "name": "Новый товар 4",
+      "category": "Категория товара 4",
+      "price": "400",
+      "id": 4
     }
   ]
 }
