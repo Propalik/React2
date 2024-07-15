@@ -69,7 +69,7 @@ const Alert = ({
   return (
     <div
       id="Alert"
-      className={`inline-flex bg-e transform-gpu transition-transform duration-500 ease-in-out items-center ${
+      className={`inline-flex transform-gpu transition-transform duration-500 ease-in-out items-center ${
         variantClasses[variant]
       } ${alignClasses[align]} ${
         isOpen ? "translate-y-0" : "translate-y-96"

@@ -1,59 +1,66 @@
+import { validateForm } from "../utils/validators";
 import { useState } from "react";
 
 /**
  * Хук для управления обработки, обновления и отправки данных формы.
  *
- * @param {Object} initialState - Начальное состояние формы (Объект).
- * @param {Function} setNewState - Функция для обновления ссостояния.
- * @returns {formData} - Объект с состоянием формы.
+ * @param {Object} initialValues - Начальное состояние формы (Объект).
+ * @returns {formValues} - Объект с состоянием формы.
  * @returns {handleInputChange} - Функция обработчик при смене данных в инпуте.
- * @returns {handleSubmit} - Функция обработчик при отправке формы.
  * @returns {resetForm} - Функция сброса состояния формы.
  */
-export function useForm(initialState, setNewState) {
+export function useForm(initialValues) {
   // Состояние формы, хранит значения полей
-  const [formData, setFormData] = useState(initialState);
+  const [formValues, setFormValues] = useState(initialValues);
+
+  // Состояние для отслеживания ошибок валидации
+  const [formErrors, setFormErrors] = useState({});
 
   // Обработчик при смене данных на элементе формы
-  const handleInputChange = (event) => {
-    // Извлекаем имя поля и его новое значение из события
-    const { name, value } = event.target;
+  // const handleInputChange = (event) => {
+  //   // Извлекаем имя поля и его новое значение из события
+  //   const { name, value } = event.target;
 
-    // Обновляем state формы
-    setFormData({
-      ...formData,
-      [name]: value, // Обновляем значение поля в state
-    });
-  };
+  //   // Обновляем state формы
+  //   setFormValues({
+  //     ...formValues,
+  //     [name]: value, // Обновляем значение поля в state
+  //   });
+  // };
 
-  // Обработчик при отправке данных
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  /**
+   * Обработчик изменения значения полей формы.
+   *
+   * @param {Object} e - Событие изменения.
+   */
+  const handleInput = (e) => {
+    const { name, value } = e.target;
 
-    // Проверка наличия пустых полей
-    const isEmptyField = Object.values(formData).some(
-      (value) => value.trim() === ""
-    );
+    // Обновляем состояние формы для текущего поля
+    const updatedFormState = { ...formValues, [name]: value };
+    
+    setFormValues(updatedFormState);
 
-    if (isEmptyField) {
-      console.log("Все поля обязательны к заполнению");
-    } else {
-      console.log("Отправленные данные:", formData);
+    // Валидируем только текущее поле
+    const validationErrors = {
+      ...formErrors,
+      [name]: validateForm({ [name]: value })[name],
+    };
 
-      // Данные формы не содержат пустых полей, выполняем отправку
-      setNewState && setNewState(formData);
-      // Очистка формы
-      resetForm();
-    }
+    console.log('ошибки в хуке', validationErrors);
+
+    // Обновляем состояние ошибок
+    setFormErrors(validationErrors);
   };
 
   // Функция для сброса состояния формы
-  const resetForm = () => setFormData(initialState);
+  const resetForm = () => setFormValues(initialValues);
 
   return {
-    formData,
-    handleSubmit,
-    handleInputChange,
+    formValues,
+    formErrors,
+    handleInput,
+    resetForm,
   };
 }
 
