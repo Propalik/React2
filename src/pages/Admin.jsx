@@ -12,6 +12,11 @@ const Admin = () => {
   // Стейт для скрытия/показа компонента Alert
   const [isAlertOpen, setAlertOpen] = useState(false);
 
+  // Стейт для показа детальной информации по товару в Drawer
+  const [selectedValue, setSelectedValue] = useState(null);
+
+  console.log('selectedvalue', selectedValue)
+
   // Использование абстрактного стора
   const { items, fetchItems, addItem } = useItemsStore();
 
@@ -19,24 +24,30 @@ const Admin = () => {
     fetchItems();
   }, [fetchItems]);
 
-  /**
-   * Функция для добавления нового продукта в список.
-   */
-  const setNewProduct = () => {
-    addItem(formData);
-    setDrawerOpen(false); // Закрываем Drawer после добавления продукта
+  // Функция для обработки успешной отправки формы
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+
+    console.log("Отправленные данные:", formValues);
+    addItem(formValues);
+    setDrawerOpen(false); // Закрываем Drawer
     setAlertOpen(true); // Показываем Alert
+    resetForm(); // Сбрасываем форму
   };
 
   // Использование кастомного хука для обработки данных
-  const { formData, handleSubmit, handleInputChange } = useForm(
-    {
-      name: "",
-      category: "",
-      price: "",
-    },
-    setNewProduct
-  );
+  const { formValues, handleInput, resetForm } = useForm({
+    name: "",
+    category: "",
+    price: "",
+  });
+
+  // Функция для обработки двойного клика на строку таблицы
+  const handleRowDoubleClick = (rowData) => {
+    console.log(rowData);
+    setSelectedValue(rowData); // Помещаем в стейт выбранное значение из строки
+    setDrawerOpen(true); // Открываем Drawer
+  };
 
   return (
     <section className="admin">
@@ -59,72 +70,80 @@ const Admin = () => {
             { key: "price", title: "Цена" },
           ]}
           data={items}
+          onRowDoubleClick={handleRowDoubleClick}
         />
 
         {isDrawerOpen && (
           <Drawer
             isOpen={isDrawerOpen}
             onClose={() => setDrawerOpen(false)}
-            title="Добавление нового товара"
+            title={selectedValue ? "Детальная информация по товару" : "Добавление нового товара"}
           >
-            <div className="w-full max-w-xs">
-              <form onSubmit={handleSubmit}>
-                <div className="mb-4">
-                  <label
-                    className="block text-gray-700 text-sm font-bold mb-2"
-                    htmlFor="taskName"
+            {selectedValue ? (
+              <div>
+                <span>{selectedValue?.name}</span>
+                <span>{selectedValue?.category}</span>
+              </div>
+            ) : (
+              <div className="w-full max-w-xs">
+                <form onSubmit={handleFormSubmit}>
+                  <div className="mb-4">
+                    <label
+                      className="block text-gray-700 text-sm font-bold mb-2"
+                      htmlFor="taskName"
+                    >
+                      Название товара
+                    </label>
+                    <input
+                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      name="name"
+                      type="text"
+                      defaultValue={formValues?.name}
+                      onChange={handleInput}
+                      placeholder="Введите название"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label
+                      className="block text-gray-700 text-sm font-bold mb-2"
+                      htmlFor="taskName"
+                    >
+                      Категория товара
+                    </label>
+                    <input
+                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      name="category"
+                      type="text"
+                      defaultValue={formValues?.category}
+                      onChange={handleInput}
+                      placeholder="Введите категорию"
+                    />
+                  </div>
+                  <div className="mb-4">
+                    <label
+                      className="block text-gray-700 text-sm font-bold mb-2"
+                      htmlFor="taskName"
+                    >
+                      Цена товара
+                    </label>
+                    <input
+                      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      name="price"
+                      type="number"
+                      defaultValue={formValues?.price}
+                      onChange={handleInput}
+                      placeholder="Введите цену"
+                    />
+                  </div>
+                  <button
+                    className="bg-indigo-500 mb-4 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded"
+                    type="submit"
                   >
-                    Название товара
-                  </label>
-                  <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    name="name"
-                    type="text"
-                    value={formData?.name}
-                    onChange={handleInputChange}
-                    placeholder="Введите название"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label
-                    className="block text-gray-700 text-sm font-bold mb-2"
-                    htmlFor="taskName"
-                  >
-                    Категория товара
-                  </label>
-                  <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    name="category"
-                    type="text"
-                    value={formData?.category}
-                    onChange={handleInputChange}
-                    placeholder="Введите категорию"
-                  />
-                </div>
-                <div className="mb-4">
-                  <label
-                    className="block text-gray-700 text-sm font-bold mb-2"
-                    htmlFor="taskName"
-                  >
-                    Цена товара
-                  </label>
-                  <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    name="price"
-                    type="number"
-                    value={formData?.price}
-                    onChange={handleInputChange}
-                    placeholder="Введите цену"
-                  />
-                </div>
-                <button
-                  className="bg-indigo-500 mb-4 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded"
-                  type="submit"
-                >
-                  Add Item
-                </button>
-              </form>
-            </div>
+                    Add Item
+                  </button>
+                </form>
+              </div>
+            )}
           </Drawer>
         )}
 

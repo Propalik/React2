@@ -4,14 +4,15 @@ import TextCell from "./TextCell";
  * Компонент строка таблицы.
  * @param {object} props - Свойства компонента.
  * @param {object} props.rowData - Объект с характеристиками передавайемой сущности.
+ * @param {function} props.onDoubleClick - Функция для обработки двойного клика (событие браузера).
  * @returns {JSX.Element} Элемент JSX.
  */
-const TableRow = ({ rowData }) => {
+const TableRow = ({ rowData, onDoubleClick }) => {
   // Получает все ключи объекта rowData, кроме ключа id
   const rowKeys = Object.keys(rowData || {}).filter((key) => key !== "id");
 
   return (
-    <div className="flex flex-row">
+    <div className="flex flex-row cursor-pointer" onDoubleClick={() => onDoubleClick(rowData)}>
       {rowKeys?.map((key) => (
         <TextCell key={crypto.randomUUID()} value={rowData?.[key]} />
       ))}
