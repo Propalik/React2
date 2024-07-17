@@ -12,7 +12,7 @@ const TableRow = ({ rowData, onDoubleClick }) => {
   const rowKeys = Object.keys(rowData || {}).filter((key) => key !== "id");
 
   return (
-    <div className="flex flex-row cursor-pointer" onDoubleClick={() => onDoubleClick(rowData)}>
+    <div className="flex flex-row cursor-pointer hover:bg-gray-200" onDoubleClick={() => onDoubleClick(rowData)}>
       {rowKeys?.map((key) => (
         <TextCell key={crypto.randomUUID()} value={rowData?.[key]} />
       ))}

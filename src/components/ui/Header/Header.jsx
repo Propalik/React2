@@ -1,5 +1,10 @@
+import { useState } from "react";
+import useForm from "../../../hooks/useForm";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import useProductsStore from "../../../store/useProductsStore";
+import { Modal } from "../Modal/Modal";
+import Input from "../Input/Input";
+import { useAuth } from "../../../hooks/useAuth";
 
 /** Массив пунктов меню */
 const navItems = [
@@ -13,6 +18,19 @@ const navItems = [
  * @returns {JSX.Element} Элемент header.
  */
 const Header = () => {
+  // Стейт для показа/скрытия модального окна.
+  const [showModal, setShowModal] = useState(false);
+
+  // Использование кастомного хука для обработки данных
+  const { formValues, formErrors, handleInput, resetForm } = useForm({
+    text: "",
+    password: "",
+  });
+
+  const { onRegister } = useAuth();
+
+  console.log('данные формы', formValues);
+
   const location = useLocation();
 
   const navigate = useNavigate(); // хук для роутинга
@@ -37,6 +55,17 @@ const Header = () => {
       location?.pathname === path ||
       (path === "/cards" && location?.pathname?.startsWith("/cards"))
     );
+  };
+
+  // Функция для обработки успешной отправки формы
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+
+    onRegister(formValues);
+
+    setShowModal(false); // Закрываем Modal
+    // setAlertOpen(true); // Показываем Alert
+    resetForm(); // Сбрасываем форму
   };
 
   return (
@@ -72,6 +101,58 @@ const Header = () => {
               ))}
             </div>
           </nav>
+          <div id="buttons-wrapper" className="inline-flex items-center">
+            <button
+              type="button"
+              className="border-2 text-indigo-500 border-indigo-500 font-medium py-2 px-4 rounded"
+            >
+              Login
+            </button>
+            <button
+              type="button"
+              className="ml-3 border-2 border-indigo-500 bg-indigo-500 text-white font-medium py-2 px-4 rounded"
+              onClick={() => setShowModal(true)}
+            >
+              Register
+            </button>
+          </div>
+          {showModal && (
+            <Modal
+              title="Registration form"
+              isOpen={showModal}
+              onClose={() => setShowModal(false)}
+            >
+              <form onSubmit={handleFormSubmit}>
+                <Input
+                  label="Login"
+                  name="text"
+                  type="text"
+                  value={formValues?.text}
+                  onInput={handleInput}
+                  placeholder="Enter your login"
+                  error={formErrors?.text}
+                  required
+                />
+                <Input
+                  label="Password"
+                  type="password"
+                  name="password"
+                  value={formValues?.password}
+                  onInput={handleInput}
+                  placeholder="Enter your password"
+                  error={formErrors?.password}
+                  required
+                />
+
+                <button
+                  className="bg-indigo-500 text-white font-medium py-2 px-4 rounded"
+                  type="submit"
+                >
+                  Submit data
+                </button>
+              </form>
+            </Modal>
+          )}
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
             <button
               type="button"
