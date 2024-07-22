@@ -84,18 +84,18 @@ export function validateForm(formData) {
   const validationErrors = {};
 
   // Итерация по каждому полю формы
-  Object.entries(formData).forEach(([fieldName, value]) => {
-    // Получение валидатора для текущего поля
-    const validator = validators[fieldName];
+  Object.entries(formData).forEach(([type, value]) => {
+    // Получение валидатора для текущего типа поля
+    const validator = validators[type];
 
     // Если валидатор существует, выполняем проверку
     if (validator) {
       // Вызов валидатора для текущего значения поля
-      const errorMessage = validator(value, fieldName);
+      const errorMessage = validator(value);
 
       // Если есть сообщение об ошибке, добавляем его в объект ошибок
       if (errorMessage) {
-        validationErrors[fieldName] = errorMessage;
+        validationErrors[type] = errorMessage;
       }
     }
   });
