@@ -1,4 +1,6 @@
 import Form from "../components/ui/Form/Form";
+import Button from "../components/ui/Button/Button";
+import { IoAddOutline } from "react-icons/io5";
 
 const Home = () => {
   return (
@@ -8,7 +10,25 @@ const Home = () => {
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam, vitae.
       </p>
 
-      <Form/>
+      <Button variant="primary">Primary</Button>
+      <Button variant="primary">
+        Primary
+        <IoAddOutline />
+      </Button>
+      <Button variant="primary">
+        <IoAddOutline />
+        Primary
+      </Button>
+      <Button variant="primary" isLoading={true}>
+        Primary
+      </Button>
+      <Button variant="primary">
+        <IoAddOutline />
+      </Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="ghost">Ghost</Button>
+      <Button variant="link">Link</Button>
+      <Form />
     </div>
   );
 };
