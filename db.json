@@ -306,14 +306,14 @@
   ],
   "users": [
     {
-      "text": "admin",
-      "password": "12345678",
+      "login": "admin",
+      "password": "0000000000",
       "role": "admin",
       "id": 1
     },
     {
-      "text": "user",
-      "password": "87654321",
+      "login": "userOne",
+      "password": "11111111",
       "role": "user",
       "id": 2
     }

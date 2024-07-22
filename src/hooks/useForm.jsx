@@ -38,8 +38,11 @@ export function useForm(initialValues) {
     setFormErrors(validationErrors);
   };
 
-  // Функция для сброса состояния формы
-  const resetForm = () => setFormValues(initialValues);
+  // Функция для сброса состояния формы и состояния ошибок
+  const resetForm = () => {
+    setFormValues(initialValues);
+    setFormErrors({});
+  };
 
   return {
     formValues,
