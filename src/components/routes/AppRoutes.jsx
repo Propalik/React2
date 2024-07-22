@@ -5,12 +5,18 @@ import Cards from "../../pages/Cards";
 import CardDetail from "../../pages/CardDetail";
 import FavoritesList from "../../pages/FavoritesList";
 import Admin from "../../pages/Admin";
+import PrivateRoute from "./PrivateRoute";
 
 /** Массив роутов приложения */
 const routes = [
   { path: "/", element: <Home /> },
   { path: "cards", element: <Cards /> },
-  { path: "admin", element: <Admin /> },
+  // { path: "admin", element: <Admin /> },
+  // Приватный маршрут для администратора
+  {
+    path: "admin",
+    element: <PrivateRoute element={<Admin />} requiredRole="admin" />,
+  }, 
   { path: "cards/:id", element: <CardDetail /> },
   { path: "favorites", element: <FavoritesList /> },
 ];

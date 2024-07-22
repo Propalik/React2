@@ -60,21 +60,42 @@ export const AuthProvider = ({ children }) => {
    */
   const onRegister = async (userData) => {
     try {
-      const response = await fetch("http://localhost:3000/users", {
+      // Получение всех пользователей
+      const response = await fetch("http://localhost:3000/users");
+
+      const users = await response?.json();
+
+      if (!response.ok) {
+        throw new Error("Ошибка при запросе на сервер");
+      }
+
+      // Проверяем, существует ли уже суперпользователь
+      const adminExists = users?.some((user) => user?.role === "admin");
+
+      // Определяем роль нового пользователя
+      const newUser = {
+        ...userData,
+        role: adminExists ? "user" : "admin",
+      };
+
+      // Отправка запроса на создание нового пользователя
+      const createResponse = await fetch("http://localhost:3000/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(userData),
+        body: JSON?.stringify(newUser),
       });
 
-      if (!response.ok) {
+      if (!createResponse?.ok) {
         throw new Error("Ошибка регистрации пользователя");
       }
 
-      const newUser = await response.json();
+      const createdUser = await createResponse?.json();
 
-      onLogin(newUser);
+      onLogin(createdUser); // Выполняем вход после регистрации ?
+
+      localStorage.setItem("user", JSON.stringify(createdUser));
     } catch (error) {
       console.error("Ошибка при регистрации пользователя:", error);
     }
@@ -85,10 +106,43 @@ export const AuthProvider = ({ children }) => {
    * @param {object} userData - Данные пользователя
    * @returns {void}
    */
-  const onLogin = (userData) => {
-    setUser(userData);
+  /**
+   * Функция для входа пользователя
+   * @param {object} userData - Данные пользователя, включающие текст и пароль
+   * @returns {Promise<void>}
+   */
+  const onLogin = async (userData) => {
+    try {
+      const { login, password } = userData;
 
-    localStorage.setItem("user", JSON.stringify(userData));
+      // Отправка запроса на сервер для поиска пользователя с указанным логином
+      // encodeURIComponent() — кодирует спец. символы в строке login, для безопасного использования в URL
+      const response = await fetch(
+        `http://localhost:3000/users?login=${encodeURIComponent(login)}`
+      );
+
+      if (!response.ok) {
+        throw new Error("Ошибка при запросе на сервер");
+      }
+
+      const users = await response?.json();
+
+      // Проверка наличия пользователя и совпадения пароля
+      if (users?.length === 1 && users[0]?.password === password) {
+        // Пользователь найден и пароль совпадает
+        const user = users[0];
+
+        setUser(user);
+
+        localStorage.setItem("user", JSON.stringify(user));
+      } else {
+        // Пользователь не найден или данные неверны
+        console.error("Неверное имя пользователя или пароль");
+        // Можно добавить логику для отображения ошибки пользователю
+      }
+    } catch (error) {
+      console.error("Ошибка при входе пользователя:", error);
+    }
   };
 
   /**
