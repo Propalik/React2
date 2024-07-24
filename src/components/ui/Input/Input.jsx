@@ -1,5 +1,6 @@
-import classNames from "classnames";
 import { useState, useEffect } from "react";
+import { cn } from "../../../utils/merge-styles";
+// import classNames from "classnames";
 
 /**
  * Компонент ввода текста.
@@ -39,7 +40,14 @@ const Input = ({
   onFocus,
   className,
 }) => {
-  const inputClasses = classNames(
+  // const inputClasses = classNames(
+  //   "max-w-96 w-full border border-gray-300 p-2 rounded-md focus:outline-none mb-1",
+  //   disabled ? "opacity-50 cursor-not-allowed" : "",
+  //   required && error ? "border-rose-500" : "",
+  //   className || ""
+  // );
+
+  const inputClasses = cn(
     "max-w-96 w-full border border-gray-300 p-2 rounded-md focus:outline-none mb-1",
     disabled ? "opacity-50 cursor-not-allowed" : "",
     required && error ? "border-rose-500" : "",
