@@ -6,11 +6,15 @@ import { Modal } from "../Modal/Modal";
 import Input from "../Input/Input";
 import { useAuth } from "../../../hooks/useAuth";
 
+import { IoHomeOutline } from "react-icons/io5";
+import { PiCards } from "react-icons/pi";
+import { RiAdminLine } from "react-icons/ri";
+
 /** Массив пунктов меню */
 const navItems = [
-  { name: "Home", path: "/" },
-  { name: "Products", path: "/cards" },
-  { name: "Admin", path: "/admin" },
+  { name: "Home", path: "/", icon: <IoHomeOutline /> },
+  { name: "Cards", path: "/cards", icon: <PiCards /> },
+  { name: "Admin", path: "/admin", icon: <RiAdminLine /> },
 ];
 
 /**
@@ -31,8 +35,6 @@ const Header = () => {
   });
 
   const { user, onRegister, onLogin, onLogout } = useAuth();
-
-  console.log(user);
 
   const location = useLocation();
 
@@ -123,18 +125,20 @@ const Header = () => {
 
                 return (
                   <NavLink
-                    to={item.path}
-                    key={item.path}
+                    to={item?.path}
+                    key={item?.path}
                     className={`text-zinc-800 inline-flex items-center px-1 pt-1 text-sm ${
-                      isActiveLink(item.path)
+                      isActiveLink(item?.path)
                         ? "text-indigo-500 border-b-2 border-indigo-500"
                         : "hover:text-indigo-500"
                     }`}
                   >
-                    {item.name}
+                    {item?.name}
+                    {item?.icon}
                   </NavLink>
                 );
               })}
+              {/* <Navigation items={navItems}/> */}
             </div>
           </nav>
           <div id="buttons-wrapper" className="inline-flex items-center">
