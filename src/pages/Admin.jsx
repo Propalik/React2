@@ -4,6 +4,7 @@ import { Drawer } from "../components/ui/Drawer/Drawer";
 import Alert from "../components/ui/Alert/Alert";
 import Table from "../components/ui/Table/Table";
 import useItemsStore from "../store/useItemsStore";
+import Button from "../components/ui/Button/Button";
 
 const Admin = () => {
   // Стейт для скрытия/показа компонента Drawer
@@ -15,41 +16,85 @@ const Admin = () => {
   // Стейт для показа детальной информации по товару в Drawer
   const [selectedValue, setSelectedValue] = useState(null);
 
-  console.log("selectedvalue", selectedValue);
-
-  // Использование абстрактного стора
-  const { items, fetchItems, addItem } = useItemsStore();
+  // Стор для CRUD операций.
+  const { items, fetchItems, addItem, editItem, deleteItem } = useItemsStore();
 
   useEffect(() => {
     fetchItems();
   }, [fetchItems]);
 
-  // Функция для обработки успешной отправки формы
+  /**
+   * Обработка отправки формы. Если товар выбран - редактирует, иначе добавляет новый товар.
+   *
+   * @param {Event} event - Событие отправки формы.
+   * @returns {void}
+   */
   const handleFormSubmit = (event) => {
     event.preventDefault();
 
-    console.log("Отправленные данные:", formValues);
     addItem(formValues);
-    setDrawerOpen(false); // Закрываем Drawer
-    setAlertOpen(true); // Показываем Alert
-    resetForm(); // Сбрасываем форму
+
+    setDrawerOpen(false);
+
+    setAlertOpen(true);
+
+    resetForm();
   };
 
-  // Использование кастомного хука для обработки данных
+  /**
+   * Обрабатывает редактирование товара.
+   *
+   * @returns {void}
+   */
+  const handleEditItem = () => {
+    if (selectedValue) {
+      editItem(selectedValue?.id, formValues);
+
+      setDrawerOpen(false);
+
+      setSelectedValue(null);
+    }
+  };
+
+  /**
+   * Обрабатывает удаление товара.
+   *
+   * @returns {void}
+   */
+  const handleDeleteItem = () => {
+    if (selectedValue) {
+      deleteItem(selectedValue?.id);
+
+      setDrawerOpen(false);
+
+      setSelectedValue(null);
+      
+    }
+  };
+
+  // Обработка данных формы.
   const { formValues, handleInput, resetForm } = useForm({
     name: "",
     category: "",
     price: "",
   });
 
-  // Функция для обработки двойного клика на строку таблицы
+  /**
+   * Обрабатывает двойной клик по строке таблицы.
+   *
+   * @param {Object} rowData - Данные строки, по которой был выполнен двойной клик.
+   * @returns {void}
+   */
   const handleRowDoubleClick = (rowData) => {
-    console.log(rowData);
-    setSelectedValue(rowData); // Помещаем в стейт выбранное значение из строки
-    setDrawerOpen(true); // Открываем Drawer
+    setSelectedValue(rowData);
+    setDrawerOpen(true);
   };
 
-  // Функция для обработки закрытия Drawer и сбрасывания selectedValue
+  /**
+   * Закрывает компонент Drawer и очищает выбранное значение.
+   *
+   * @returns {void}
+   */
   const hanldeCloseDrawer = () => {
     setDrawerOpen(false);
     setSelectedValue(null);
@@ -85,7 +130,7 @@ const Admin = () => {
             onClose={hanldeCloseDrawer}
             title={
               selectedValue
-                ? "Детальная информация по товару"
+                ? "Редактирование товара"
                 : "Добавление нового товара"
             }
           >
@@ -105,7 +150,6 @@ const Admin = () => {
                     defaultValue={selectedValue?.name || formValues?.name}
                     onChange={handleInput}
                     placeholder="Введите название"
-                    readOnly={selectedValue?.name}
                   />
                 </div>
                 <div className="mb-4">
@@ -124,7 +168,7 @@ const Admin = () => {
                     }
                     onChange={handleInput}
                     placeholder="Введите категорию"
-                    readOnly={selectedValue?.category}
+                    
                   />
                 </div>
                 <div className="mb-4">
@@ -141,16 +185,20 @@ const Admin = () => {
                     defaultValue={selectedValue?.price || formValues?.price}
                     onChange={handleInput}
                     placeholder="Введите цену"
-                    readOnly={selectedValue?.price}
+                    
                   />
                 </div>
-                <button
-                  className="disabled:bg-gray-200 disabled:cursor-not-allowed bg-indigo-500 mb-4 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded"
-                  type="submit"
-                  disabled={!!selectedValue}
-                >
-                  Add Item
-                </button>
+
+                {selectedValue && (
+                  <>
+                    <Button onClick={handleEditItem} variant="primary">
+                      Сохранить
+                    </Button>
+                    <Button variant="negative" onClick={handleDeleteItem}>
+                      Удалить
+                    </Button>
+                  </>
+                )}
               </form>
             </div>
           </Drawer>
