@@ -4,20 +4,24 @@ import Home from "../../pages/Home";
 import Cards from "../../pages/Cards";
 import CardDetail from "../../pages/CardDetail";
 import FavoritesList from "../../pages/FavoritesList";
+import Cart from "../../pages/Cart";
 import Admin from "../../pages/Admin";
 import PrivateRoute from "./PrivateRoute";
+import Components from "../../pages/Components";
 
 /** Массив роутов приложения */
 const routes = [
   { path: "/", element: <Home /> },
   { path: "cards", element: <Cards /> },
+  { path: "components", element: <Components /> },
   // { path: "admin", element: <Admin /> },
   // Приватный маршрут для администратора
   {
     path: "admin",
     element: <PrivateRoute element={<Admin />} requiredRole="admin" />,
-  }, 
+  },
   { path: "cards/:id", element: <CardDetail /> },
+  { path: "cart", element: <Cart /> },
   { path: "favorites", element: <FavoritesList /> },
 ];
 

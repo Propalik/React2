@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../../hooks/useAuth"; 
+import { useAuth } from "../../hooks/useAuth";
 
 /**
  * Компонент для защищенного роута
@@ -9,19 +9,21 @@ import { useAuth } from "../../hooks/useAuth";
  * @returns {JSX.Element} - Компонент
  */
 const PrivateRoute = ({ element, requiredRole }) => {
-  const { user } = useAuth(); 
+  // Получаем данные о пользователе и состояние загрузки из хука useAuth
+  const { user, loading } = useAuth();
 
-  if (!user) {
-    // Пользователь не авторизован, перенаправляем на страницу входа
-    return <Navigate to="/" replace />;
+  if (loading) {
+    // Пока данные загружаются, отображаем индикатор загрузки
+    return <div>Loading...</div>;
   }
 
   if (requiredRole && user?.role !== requiredRole) {
-    // Пользователь авторизован, но не имеет нужной роли, перенаправляем на другую страницу
-    return <Navigate to="/unauthorized" replace />;
+    // Если роль пользователя не совпадает с требуемой, перенаправляем на домашнюю страницу
+    return <Navigate to="/" />;
   }
 
-  return element; // Пользователь авторизован и имеет нужную роль, отображаем компонент
+  // Если все проверки пройдены, отображаем переданный компонент
+  return element;
 };
 
 export default PrivateRoute;

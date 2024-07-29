@@ -9,10 +9,15 @@ const CardDetail = () => {
   const { id } = useParams();
 
   // Стор для работы с продуктами
-  const { getProductById, onToggleFavorite } = useProductsStore();
+  const { getProductById, onToggleFavorite, addToCart } = useProductsStore();
 
   // Находим карточку по id.
   const product = getProductById(id);
+
+  // Обработчик добавления товара в корзину
+  const handleAddToCart = () => {
+    addToCart(product);
+  };
 
   return (
     <section className="card-details">
@@ -61,7 +66,10 @@ const CardDetail = () => {
               </div>
             )}
             <div className="text-lg font-bold mb-2">{product?.price}$</div>
-            <button className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded">
+            <button
+              onClick={handleAddToCart}
+              className="bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded"
+            >
               Add to Cart
             </button>
           </div>

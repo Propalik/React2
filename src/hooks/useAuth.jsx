@@ -45,12 +45,17 @@ export const AuthProvider = ({ children }) => {
    */
   const [user, setUser] = useState(null);
 
+  // Состояние загрузки
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     // Проверка аутентификации при загрузке страницы
     const userFromLocalStorage = localStorage.getItem("user");
 
     // Установка пользователя в состояние (если проверка пройдена)
     userFromLocalStorage && setUser(JSON.parse(userFromLocalStorage));
+
+    setLoading(false); // Завершаем состояние загрузки
   }, []);
 
   /**
@@ -155,7 +160,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("user");
   };
 
-  const contextValue = { user, onRegister, onLogin, onLogout };
+  const contextValue = { user, loading, onRegister, onLogin, onLogout };
 
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>

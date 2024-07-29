@@ -1,6 +1,7 @@
 import Form from "../components/ui/Form/Form";
 import Button from "../components/ui/Button/Button";
 import { IoAddOutline } from "react-icons/io5";
+import Stepper from "../components/ui/Stepper/Stepper";
 
 const Components = () => {
   return (
@@ -107,6 +108,11 @@ const Components = () => {
       <div id="form" className="mb-8">
         <h2 className="text-2xl font-semibold mb-4">Form Example</h2>
         <Form />
+      </div>
+
+      <div id="form" className="mb-8">
+        <h2 className="text-2xl font-semibold mb-4">Stepper Example</h2>
+        <Stepper step={1} minValue="1" maxValue="10" />
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import useForm from "../../../hooks/useForm";
 import Input from "../Input/Input";
+import Button from "../Button/Button";
 
 // Пример реализации валидаций с использованием хука useForm()
 const Form = () => {
@@ -20,7 +21,7 @@ const Form = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-md mx-auto mt-8 p-6 border rounded shadow-md"
+      className="mt-8 w-96 p-6 border rounded shadow-md"
     >
       <Input
         label="firstName"
@@ -67,7 +68,7 @@ const Form = () => {
         error={formErrors?.password}
         required
       />
-      <button>Отправить</button>
+      <Button variant="primary">Submit data</Button>
     </form>
   );
 };

@@ -1,14 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "../components/ui/Card/Card";
 import useProductsStore from "../store/useProductsStore";
 import { useNavigate } from "react-router-dom";
 import Alert from "../components/ui/Alert/Alert";
+import Tabs from "../components/ui/Tabs/Tabs";
 
 const Cards = () => {
   const navigate = useNavigate(); // хук для роутинга
 
   // Стор для работы с продуктами
-  const { products, onToggleFavorite, getProductById } = useProductsStore();
+  const {
+    products,
+    getFilteredProducts,
+    getCategories,
+    onToggleFavorite,
+    getProductById,
+  } = useProductsStore();
+
+  console.log(products)
+
+  // Стейт для активной категории
+  const [activeCategory, setActiveCategory] = useState("All");
+
+  // Стейт для и фильтрации продуктов
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  // Стейт для категорий (чтобы передать в компонент табы)
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    products && setCategories(getCategories());
+
+    products && setFilteredProducts(getFilteredProducts(activeCategory));
+  }, [products, activeCategory, getFilteredProducts, getCategories]);
 
   // Обработчик клика по карточке
   const handleCardClick = (id) => {
@@ -35,7 +59,9 @@ const Cards = () => {
 
     setAlertState({
       isOpen: true,
-      message: isFavorite ? "Товар удален из сохраненок" : "Товар добавлен в сохраненки",
+      message: isFavorite
+        ? "Товар удален из сохраненок"
+        : "Товар добавлен в сохраненки",
     });
   };
 
@@ -46,9 +72,14 @@ const Cards = () => {
           <h2 className="mb-4 text-4xl font-bold text-zinc-800">
             Products Page
           </h2>
+          <Tabs
+            categories={categories}
+            activeCategory={activeCategory}
+            onCategoryChange={setActiveCategory}
+          />
           <div className="flex flex-wrap gap-9">
-            {!!products &&
-              products.map((product) => (
+            {!!filteredProducts &&
+              filteredProducts?.map((product) => (
                 <Card
                   key={product?.id}
                   details={product}
