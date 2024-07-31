@@ -7,7 +7,7 @@ import { cn } from "../../../utils/merge-styles";
  * @param {object} props - Свойства компонента.
  * @param {string} props.className - Дополнительные классы для кнопки.
  * @param {function} props.onClick - Обработчик события клика.
- * @param {string} [props.variant="primary"] - Вариант стиля кнопки.
+ * @param {string} props.variant - Вариант стиля кнопки.
  * @param {React.ReactNode} [props.leftIcon] - Иконка перед текстом кнопки.
  * @param {React.ReactNode} [props.rightIcon] - Иконка после текста кнопки.
  * @param {React.ReactNode} [props.icon] - Иконка внутри кнопки.
@@ -21,7 +21,7 @@ import { cn } from "../../../utils/merge-styles";
 const Button = ({
   className,
   onClick,
-  variant = "primary",
+  variant,
   leftIcon,
   rightIcon,
   icon,
@@ -58,8 +58,7 @@ const Button = ({
       active:bg-slate-200
     `,
     link: `
-      bg-transparent underline-offset-4 text-slate-900 
-      hover:underline 
+      text-slate-900 
       focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-opacity-50
       active:text-slate-700
       disabled:text-neutral disabled:bg-transparent
@@ -69,11 +68,11 @@ const Button = ({
   // Объединение вариантов кнопок, состояний и общих стилей.
   const buttonClasses = cn(
     "rounded inline-flex items-center justify-center min-w-[36px] min-h-[36px] text-md",
-    variantClasses[variant],
-    className, 
     !icon && "px-4",
     (disabled || isLoading) &&
-      "disabled:bg-neutral-200 disabled:text-neutral-400 disabled:pointer-events-none"
+      "disabled:bg-neutral-200 disabled:text-neutral-400 disabled:pointer-events-none",
+    variantClasses[variant],
+    className
   );
 
   return (

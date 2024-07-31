@@ -54,7 +54,7 @@ export const Modal = ({ isOpen, title, onClose, children }) => {
   return (
     isOpen &&
     createPortal(
-      <div className="fixed z-10 top-0 left-0 w-full h-full flex justify-center items-center bg-opacity-50 bg-black">
+      <div className="fixed z-10 top-0 left-0 w-full h-full flex justify-center items-center bg-opacity-70 bg-black">
         <div
           ref={modalRef}
           className="modal bg-white p-4 rounded shadow-md w-96"

@@ -4,6 +4,7 @@ import useProductsStore from "../store/useProductsStore";
 import { useNavigate } from "react-router-dom";
 import Alert from "../components/ui/Alert/Alert";
 import Tabs from "../components/ui/Tabs/Tabs";
+import Pagination from "../components/ui/Pagination/Pagination";
 
 const Cards = () => {
   const navigate = useNavigate(); // хук для роутинга
@@ -17,8 +18,6 @@ const Cards = () => {
     getProductById,
   } = useProductsStore();
 
-  console.log(products)
-
   // Стейт для активной категории
   const [activeCategory, setActiveCategory] = useState("All");
 
@@ -28,11 +27,31 @@ const Cards = () => {
   // Стейт для категорий (чтобы передать в компонент табы)
   const [categories, setCategories] = useState([]);
 
+  // Стейт для пагинации (текущая страница)
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Стейт для количества элементов на странице (пагинация)
+  const itemsPerPage = 8;
+
+  // Индекс начала текущей страницы
+  const startIndex = (currentPage - 1) * itemsPerPage;
+
+  // Индекс конца текущей страницы
+  const endIndex = startIndex + itemsPerPage;
+
+  // Продукты на текущей страницы с пагинацией
+  const currentProducts = filteredProducts?.slice(startIndex, endIndex);
+
   useEffect(() => {
     products && setCategories(getCategories());
 
     products && setFilteredProducts(getFilteredProducts(activeCategory));
   }, [products, activeCategory, getFilteredProducts, getCategories]);
+
+  // Обработчик клика по кнопке (пагинация)
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
 
   // Обработчик клика по карточке
   const handleCardClick = (id) => {
@@ -77,9 +96,9 @@ const Cards = () => {
             activeCategory={activeCategory}
             onCategoryChange={setActiveCategory}
           />
-          <div className="flex flex-wrap gap-9">
-            {!!filteredProducts &&
-              filteredProducts?.map((product) => (
+          <div className="flex flex-wrap gap-9 mb-6">
+            {!!currentProducts &&
+              currentProducts?.map((product) => (
                 <Card
                   key={product?.id}
                   details={product}
@@ -88,7 +107,12 @@ const Cards = () => {
                 />
               ))}
           </div>
-          <div></div>
+          <Pagination
+            totalItems={filteredProducts?.length}
+            itemsPerPage={itemsPerPage}
+            onPageChange={handlePageChange}
+            currentPage={currentPage}
+          />
         </div>
       </section>
       <Alert

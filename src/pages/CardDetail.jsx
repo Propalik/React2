@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import useProductsStore from "../store/useProductsStore";
 import { Link } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import Image from "../components/ui/Image/Image";
+import Alert from "../components/ui/Alert/Alert";
 
 const CardDetail = () => {
   // Получение id из адресной строки через React-router-dom
@@ -11,12 +13,20 @@ const CardDetail = () => {
   // Стор для работы с продуктами
   const { getProductById, onToggleFavorite, addToCart } = useProductsStore();
 
+  // Стейт для показа/скрытия и передачи сообщения в Alert
+  const [alertState, setAlertState] = useState({
+    isOpen: false,
+    title: "",
+    subtitle: "",
+  });
+
   // Находим карточку по id.
   const product = getProductById(id);
 
   // Обработчик добавления товара в корзину
   const handleAddToCart = () => {
     addToCart(product);
+    setAlertState({isOpen: true, title: "Добавление товара", subtitle: 'Товар успешно добавлен в корзину.'})
   };
 
   return (
@@ -75,6 +85,14 @@ const CardDetail = () => {
           </div>
         </div>
       </div>
+
+      <Alert
+        title={alertState?.title}
+        subtitle={alertState?.subtitle}
+        variant="neutral"
+        isOpen={alertState?.isOpen}
+        onClose={() =>  setAlertState(!alertState?.isOpen)}
+      />
     </section>
   );
 };

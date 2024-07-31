@@ -213,6 +213,261 @@
       "imgSrc": "../assets/products/product-8.avif",
       "isFavorite": false,
       "quantity": 1
+    },
+    {
+      "id": "8",
+      "name": "BILLY Bookcase",
+      "category": "Storage",
+      "description": "A classic bookcase with adjustable shelves, perfect for any room.",
+      "details": {
+        "features": [
+          "Adjustable shelves can be arranged according to your needs.",
+          "A simple unit can be enough storage for a limited space or the foundation for a larger storage solution.",
+          "Easy to assemble; tools and instructions included."
+        ],
+        "dimensions": {
+          "width": "80 cm",
+          "height": "202 cm",
+          "depth": "28 cm"
+        },
+        "materials": ["Particleboard", "Fiberboard"],
+        "careInstructions": "Wipe clean with a damp cloth. Wipe dry with a clean cloth.",
+        "colors": ["White", "Black", "Brown"]
+      },
+      "rating": "4.5",
+      "price": "49.99",
+      "imgSrc": "../assets/products/product-9.avif",
+      "isFavorite": false,
+      "quantity": 1
+    },
+    {
+      "id": "9",
+      "name": "LACK Coffee Table",
+      "category": "Tables",
+      "description": "A stylish and functional coffee table with a minimalist design.",
+      "details": {
+        "features": [
+          "Lightweight and easy to move.",
+          "Available in different colors to match your decor.",
+          "Easy to assemble; tools and instructions included."
+        ],
+        "dimensions": {
+          "width": "55 cm",
+          "height": "45 cm",
+          "depth": "55 cm"
+        },
+        "materials": ["Particleboard", "Fiberboard"],
+        "careInstructions": "Wipe clean with a damp cloth. Wipe dry with a clean cloth.",
+        "colors": ["White", "Black-brown"]
+      },
+      "rating": "4.0",
+      "price": "14.99",
+      "imgSrc": "../assets/products/product-10.avif",
+      "isFavorite": false,
+      "quantity": 1
+    },
+    {
+      "id": "10",
+      "name": "KALLAX Shelving Unit",
+      "category": "Storage",
+      "description": "A versatile shelving unit that can be placed on the floor or mounted on the wall.",
+      "details": {
+        "features": [
+          "Can be placed vertically or horizontally to fit your needs.",
+          "Perfect for storing and displaying books, photos, and other items.",
+          "Easy to assemble; tools and instructions included."
+        ],
+        "dimensions": {
+          "width": "77 cm",
+          "height": "77 cm",
+          "depth": "39 cm"
+        },
+        "materials": ["Particleboard", "Fiberboard"],
+        "careInstructions": "Wipe clean with a damp cloth. Wipe dry with a clean cloth.",
+        "colors": ["White", "Black-brown"]
+      },
+      "rating": "4.8",
+      "price": "29.99",
+      "imgSrc": "../assets/products/product-11.avif",
+      "isFavorite": false,
+      "quantity": 1
+    },
+    {
+      "id": "11",
+      "name": "EKET Cabinet",
+      "category": "Storage",
+      "description": "A compact cabinet that fits anywhere in your home, ideal for storing small items.",
+      "details": {
+        "features": [
+          "Can be hung on the wall or placed on the floor.",
+          "Combine with other EKET cabinets to create a custom storage solution.",
+          "Easy to assemble; tools and instructions included."
+        ],
+        "dimensions": {
+          "width": "35 cm",
+          "height": "35 cm",
+          "depth": "25 cm"
+        },
+        "materials": ["Particleboard", "Fiberboard"],
+        "careInstructions": "Wipe clean with a damp cloth. Wipe dry with a clean cloth.",
+        "colors": ["White", "Gray", "Yellow"]
+      },
+      "rating": "4.1",
+      "price": "15.00",
+      "imgSrc": "../assets/products/product-12.avif",
+      "isFavorite": false,
+      "quantity": 1
+    },
+    {
+      "id": "12",
+      "name": "MÖJLIGHET Children's Chair",
+      "category": "Children's Furniture",
+      "description": "A small, colorful chair designed for children's comfort and safety.",
+      "details": {
+        "features": [
+          "Lightweight and easy for children to carry.",
+          "Stackable to save space when not in use.",
+          "Easy to assemble; tools and instructions included."
+        ],
+        "dimensions": {
+          "width": "37 cm",
+          "height": "67 cm",
+          "depth": "37 cm"
+        },
+        "materials": ["Polypropylene"],
+        "careInstructions": "Wipe clean with a damp cloth. Wipe dry with a clean cloth.",
+        "colors": ["Red", "Blue", "Green"]
+      },
+      "rating": "4.6",
+      "price": "9.99",
+      "imgSrc": "../assets/products/product-13.avif",
+      "isFavorite": false,
+      "quantity": 1
+    },
+    {
+      "id": "13",
+      "name": "FEJKA Artificial Plant",
+      "category": "Decor",
+      "description": "An artificial potted plant that adds a touch of greenery to your space without the maintenance.",
+      "details": {
+        "features": [
+          "Looks realistic and adds a natural touch to your decor.",
+          "Perfect for areas where real plants would not thrive.",
+          "Easy to clean and maintain."
+        ],
+        "dimensions": {
+          "height": "50 cm"
+        },
+        "materials": ["Polyethylene", "Polypropylene"],
+        "careInstructions": "Wipe clean with a dry cloth.",
+        "colors": ["Green"]
+      },
+      "rating": "4.9",
+      "price": "7.99",
+      "imgSrc": "../assets/products/product-14.avif",
+      "isFavorite": false,
+      "quantity": 1
+    },
+    {
+      "id": "14",
+      "name": "KRAGSTA Side Table",
+      "category": "Tables",
+      "description": "A round side table with a stylish design, perfect for any living space.",
+      "details": {
+        "features": [
+          "Lightweight and easy to move.",
+          "Available in different colors to match your decor.",
+          "Easy to assemble; tools and instructions included."
+        ],
+        "dimensions": {
+          "diameter": "50 cm",
+          "height": "55 cm"
+        },
+        "materials": ["Particleboard", "Fiberboard"],
+        "careInstructions": "Wipe clean with a damp cloth. Wipe dry with a clean cloth.",
+        "colors": ["White", "Black"]
+      },
+      "rating": "4.3",
+      "price": "29.99",
+      "imgSrc": "../assets/products/product-15.avif",
+      "isFavorite": false,
+      "quantity": 1
+    },
+    {
+      "id": "15",
+      "name": "SINNERLIG Pendant Lamp",
+      "category": "Lighting",
+      "description": "A pendant lamp with a unique design, creating a warm and cozy atmosphere.",
+      "details": {
+        "features": [
+          "Handwoven by skilled craftspeople, making each lamp unique.",
+          "Gives a warm, cozy glow in the room and provides good, general light.",
+          "Easy to assemble; tools and instructions included."
+        ],
+        "dimensions": {
+          "diameter": "40 cm",
+          "height": "40 cm"
+        },
+        "materials": ["Bamboo", "Polypropylene"],
+        "careInstructions": "Wipe clean with a dry cloth.",
+        "colors": ["Natural"]
+      },
+      "rating": "4.7",
+      "price": "49.99",
+      "imgSrc": "../assets/products/product-16.avif",
+      "isFavorite": false,
+      "quantity": 1
+    },
+    {
+      "id": "16",
+      "name": "GRÖNLID Sofa",
+      "category": "Sofas",
+      "description": "A comfortable and versatile sofa, perfect for any living room.",
+      "details": {
+        "features": [
+          "Soft and deep cushions with easily removable and machine washable covers.",
+          "Can be arranged in various combinations to suit your needs.",
+          "Easy to assemble; tools and instructions included."
+        ],
+        "dimensions": {
+          "width": "250 cm",
+          "height": "85 cm",
+          "depth": "95 cm"
+        },
+        "materials": ["Particleboard", "Fiberboard", "Polyurethane foam"],
+        "careInstructions": "Machine wash, max 40°C, normal process. Do not bleach. Do not tumble dry. Iron, max 150°C. Do not dryclean.",
+        "colors": ["Gray", "Beige"]
+      },
+      "rating": "4.5",
+      "price": "899.00",
+      "imgSrc": "../assets/products/product-1.avif",
+      "isFavorite": false,
+      "quantity": 1
+    },
+    {
+      "id": "17",
+      "name": "VINDUM Rug",
+      "category": "Textiles",
+      "description": "A thick, soft rug that adds warmth and comfort to any room.",
+      "details": {
+        "features": [
+          "Thick and dense pile with a soft texture.",
+          "Easy to care for and durable.",
+          "Available in various sizes and colors."
+        ],
+        "dimensions": {
+          "width": "200 cm",
+          "length": "300 cm"
+        },
+        "materials": ["Polypropylene"],
+        "careInstructions": "Vacuum and rotate the rug regularly. Clean with a mild detergent if necessary.",
+        "colors": ["White", "Gray"]
+      },
+      "rating": "4.2",
+      "price": "199.00",
+      "imgSrc": "../assets/products/product-2.avif",
+      "isFavorite": false,
+      "quantity": 1
     }
   ],
   "items": [

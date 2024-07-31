@@ -1,20 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useForm from "../../../hooks/useForm";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import useProductsStore from "../../../store/useProductsStore";
 import { Modal } from "../Modal/Modal";
 import Input from "../Input/Input";
 import { useAuth } from "../../../hooks/useAuth";
-
+import Image from "../Image/Image";
 import { IoHomeOutline } from "react-icons/io5";
 import { PiCards } from "react-icons/pi";
 import { RiAdminLine } from "react-icons/ri";
+import { CgComponents } from "react-icons/cg";
 
 /** Массив пунктов меню */
 const navItems = [
-  { name: "Home", path: "/", icon: <IoHomeOutline /> },
-  { name: "Cards", path: "/cards", icon: <PiCards /> },
-  { name: "Admin", path: "/admin", icon: <RiAdminLine /> },
+  { name: "Home", path: "/", icon: <IoHomeOutline className="w-5 h-5 ml-1" /> },
+  {
+    name: "Components",
+    path: "/components",
+    icon: <CgComponents className="w-5 h-5 ml-1" />,
+  },
+  { name: "Cards", path: "/cards", icon: <PiCards className="w-5 h-5 ml-1" /> },
+  {
+    name: "Admin",
+    path: "/admin",
+    icon: <RiAdminLine className="w-5 h-5 ml-1" />,
+  },
 ];
 
 /**
@@ -34,20 +44,36 @@ const Header = () => {
     password: "",
   });
 
+  // Кастомный хук для регистрации, входа, выхода
   const { user, onRegister, onLogin, onLogout } = useAuth();
 
+  // Получаем текущее местоположение (URL) из хука
   const location = useLocation();
 
-  const navigate = useNavigate(); // хук для роутинга
+  // Хук для навигации (роутинга) по страницам
+  const navigate = useNavigate();
 
-  // Достаем функцию, которая показывает сохраненки
-  const { getFavoriteProducts } = useProductsStore();
+  // Количество сохраненных ранее товаров, корзины и общего кол-ва в корзине
+  const { getFavoriteProducts, getAllCartProducts, cart } = useProductsStore();
 
+  // Стейт для хранения количества товаров в корзине
+  const [cartCount, setCartCount] = useState(0);
+
+  // Получаем количество избранных продуктов
   const favoritesCount = getFavoriteProducts()?.length;
+
+  useEffect(() => {
+    setCartCount(getAllCartProducts());
+  }, [cart, getAllCartProducts]);
 
   // Показ страницы с сохраненками
   const handleToOpenFavorites = () => {
     navigate(`/favorites`);
+  };
+
+  // Показ страницы корзина товаров
+  const handleToCartOpen = () => {
+    navigate(`/cart`);
   };
 
   /**
@@ -60,6 +86,7 @@ const Header = () => {
       location?.pathname === path ||
       (path === "/cards" && location?.pathname?.startsWith("/cards"))
     );
+    // return location?.pathname === path; // Если нет вложенных страниц
   };
 
   // Обработка формы при регистрации
@@ -74,7 +101,7 @@ const Header = () => {
   };
 
   // Обработка формы при входе в систему
-  const handleLoginForm = () => {
+  const handleLoginForm = (event) => {
     event.preventDefault();
 
     onLogin(formValues);
@@ -86,7 +113,7 @@ const Header = () => {
 
   // Обработчик закрытия модального окна (логин)
   const closeLoginModalAndResetForm = () => {
-    setShowRegisterModal(false);
+    setShowLoginModal(false);
     resetForm(); // Сбрасываем форму
   };
 
@@ -102,15 +129,11 @@ const Header = () => {
         <div className="relative flex justify-between h-16">
           <nav className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
             <NavLink to="/" className="flex-shrink-0 flex items-center">
-              <img
-                className="block lg:hidden h-8 w-auto"
-                src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-                alt="Workflow"
-              />
-              <img
-                className="hidden lg:block h-8 w-auto fill-zinc-800"
-                src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg"
-                alt="Workflow"
+              <Image
+                className="w-36 object-contain"
+                isCritical={true}
+                src="../../../assets/header/logo.svg"
+                alt="Logo"
               />
             </NavLink>
             <div className="hidden sm:ml-8 sm:flex sm:space-x-8">
@@ -263,14 +286,18 @@ const Header = () => {
               </svg>
 
               {!!favoritesCount && (
-                <span className="w-4 h-4 text-xs/6 px-1 leading-4 text-white inline-flex justify-center justify-items-center bg-indigo-500 rounded-3xl absolute top-0 right-0">
+                <span className="w-5 h-5 text-xs px-1 leading-5 text-white inline-flex items-center justify-center bg-indigo-500 rounded-full absolute top-[-4px] right-[-4px]">
                   {favoritesCount}
                 </span>
               )}
             </button>
             <button
+              onClick={handleToCartOpen}
+              id="cart"
               type="button"
-              className="bg-transparent p-1 rounded-full text-gray-400 hover:text-gray-500"
+              className={`relative bg-transparent p-1 mr-3 rounded-full text-gray-400 hover:text-gray-500   ${
+                location?.pathname === "/cart" ? "text-indigo-500" : ""
+              }`}
             >
               <svg
                 fill="currentColor"
@@ -282,6 +309,11 @@ const Header = () => {
                 <path d="M17 24H21V28H17zM24 24H28V28H24zM17 17H21V21H17zM24 17H28V21H24z"></path>
                 <path d="M28,11h-6V7c0-1.7-1.3-3-3-3h-6c-1.7,0-3,1.3-3,3v4H4c-0.6,0-1,0.4-1,1c0,0.1,0,0.1,0,0.2l1.9,12.1c0.1,1,1,1.7,2,1.7H15v-2	H6.9L5.2,13H28V11z M12,7c0-0.6,0.4-1,1-1h6c0.6,0,1,0.4,1,1v4h-8V7z"></path>
               </svg>
+              {!!cartCount && (
+                <span className="w-5 h-5 text-xs px-1 leading-5 text-white inline-flex items-center justify-center bg-indigo-500 rounded-full absolute top-[-4px] right-[-4px]">
+                  {cartCount}
+                </span>
+              )}
             </button>
           </div>
         </div>
